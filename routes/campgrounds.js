@@ -6,7 +6,9 @@ const Campground = require('../models/campground');
 const { campgroundSchema, reviewSchema } = require('../schemas.js');
 const { isLoggedIn, isAuthor } = require('../middleware')
 const { index, renderNewForm, createCampgrounds, showCampgrounds, renderEditForm, updateCampground, deleteCampground } = require('../controllers/campgrounds')
-
+const multer = require('multer')
+const { storage } = require('../cloudinary/index')
+const upload = multer({ storage: storage })
 const validateCampground = (req, res, next) => {
     const { error } = campgroundSchema.validate(req.body);
     if (error) {
@@ -23,13 +25,14 @@ router.get('/', catchAsync(index));
 router.get('/new', isLoggedIn, renderNewForm)
 
 
-router.post('/', validateCampground, catchAsync(createCampgrounds))
+router.post('/', isLoggedIn, upload.array('image'), validateCampground, catchAsync(createCampgrounds)
+)
 
 router.get('/:id', catchAsync(showCampgrounds));
 
 router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(renderEditForm))
 
-router.put('/:id', isLoggedIn, isAuthor, validateCampground, catchAsync(updateCampground));
+router.put('/:id', isLoggedIn, isAuthor, upload.array('image'), validateCampground, catchAsync(updateCampground));
 
 router.delete('/:id', isLoggedIn, isAuthor, catchAsync(deleteCampground));
 
