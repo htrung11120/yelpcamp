@@ -1,6 +1,8 @@
 <% layout('layouts/boilerplate')%>
     <link rel="stylesheet" href="/stylesheets/stars.css">
 
+
+
     <div class="row">
         <div class="col-6">
             <div id="campgroundCarousel" class="carousel slide" data-ride="carousel">
@@ -10,6 +12,7 @@
                             <img src="<%= img.url%>" class="d-block w-100" alt="">
                         </div>
                         <% }) %>
+
                 </div>
                 <% if(campground.images.length> 1) {%>
                     <a class="carousel-control-prev" href="#campgroundCarousel" role="button" data-slide="prev">
@@ -55,14 +58,13 @@
 
         </div>
         <div class="col-6">
+            <div id='map' style='width: 100%; height: 300px;'></div>
+
             <% if(currentUser){ %>
                 <h2>Leave a Review</h2>
                 <form action="/campgrounds/<%=campground._id%>/reviews" method="POST" class="mb-3 validated-form"
                     novalidate>
-                    <!-- <div class="mb-3">
-                <label class="form-label" for="rating">Rating</label>
-                <input class="form-range" type="range" min="1" max="5" name="review[rating]" id="rating">
-            </div> -->
+
                     <fieldset class="starability-basic">
                         <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked
                             aria-label="No rating." />
@@ -112,3 +114,9 @@
                         <% } %>
         </div>
     </div>
+    <script>
+        const mapToken = '<%-process.env.MAPBOX_TOKEN%>';
+        const campground = '<%-JSON.stringify(campground)%>'
+    </script>
+
+    <script src="/javascripts/showPageMap.js"></script>
