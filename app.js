@@ -21,7 +21,7 @@ const User = require('./models/user');
 const campgroundsRouter = require('./routes/campgrounds.js')
 const reviewsRouter = require('./routes/reviews')
 const userRouter = require('./routes/user')
-
+const mongoSanitize = require('express-mongo-sanitize');
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
@@ -36,6 +36,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(mongoSanitize());
+
 const sessionConfig = {
     secret: 'thishouldbeagoodsecret',
     resave: false,
