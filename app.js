@@ -80,7 +80,6 @@ app.use(
                 "blob:",
                 "data:",
                 "https://res.cloudinary.com/drq8bsinw/",
-                "https://res.cloudinary.com/douqbebwk/",
                 "https://images.unsplash.com/",
             ],
             fontSrc: ["'self'", ...fontSrcUrls],
