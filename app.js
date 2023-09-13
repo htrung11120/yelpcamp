@@ -27,7 +27,7 @@ const helmet = require('helmet')
 const dbUrl = process.env.DB_URL
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", () => { 
+db.once("open", () => {
     console.log("Database connected");
 });
 mongoose.connect(dbUrl);
@@ -80,6 +80,7 @@ app.use(
                 "blob:",
                 "data:",
                 "https://res.cloudinary.com/drq8bsinw/",
+                "https://res.cloudinary.com/douqbebwk/",
                 "https://images.unsplash.com/",
             ],
             fontSrc: ["'self'", ...fontSrcUrls],
